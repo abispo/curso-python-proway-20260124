@@ -25,3 +25,5 @@ class Opcao(models.Model):
 
     class Meta:
         db_table = "opcoes"
+        verbose_name_plural = "Opções"
+    
