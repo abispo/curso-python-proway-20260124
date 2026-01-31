@@ -8,10 +8,11 @@ def index(request):
         "-data_publicacao"
     )[:5]
 
-    perguntas = [p.texto_pergunta for p in ultimas_cinco_perguntas]
+    contexto = {
+        "ultimas_cinco_perguntas": ultimas_cinco_perguntas,
+    }
 
-    saida = ", ".join(perguntas)
-    return HttpResponse(saida)
+    return render(request, "enquetes/index.html", context=contexto)
 
 def detalhes(request, pergunta_id):
     return HttpResponse(f"Você está nos detalhes da pergunta {pergunta_id}")
