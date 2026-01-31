@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Pergunta
@@ -15,7 +15,8 @@ def index(request):
     return render(request, "enquetes/index.html", context=contexto)
 
 def detalhes(request, pergunta_id):
-    return HttpResponse(f"Você está nos detalhes da pergunta {pergunta_id}")
+    pergunta = get_object_or_404(Pergunta, pk=pergunta_id)
+    return render(request, "enquetes/detalhes.html", context={"pergunta": pergunta})
 
 def resultados(request, pergunta_id):
     return HttpResponse(f"Você está na página de resultados da pergunta {pergunta_id}")
