@@ -1,6 +1,6 @@
 # Desafio
 
-Criar um novo app chamado estatísticas (python manage.py startapp estatisticas). Esse app servirá para exibir algumas estatísticas do sistema de enquetes.
+Criar um novo app chamado estatísticas (`python manage.py startapp estatisticas`). Esse app servirá para exibir algumas estatísticas do sistema de enquetes.
 
 Existirá apenas 1 rota (index), que será uma página HTML básica que mostrará uma lista com as seguintes informações:
 
