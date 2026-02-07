@@ -13,3 +13,6 @@ Existirá apenas 1 rota (index), que será uma página HTML básica que mostrar�
 | Churrasco       | 10                      | Qual a sua comida favorita?
 | Sushi           | 5                       | Qual a sua comida favorita?
 | Blumenau        | 4                       | Qual a sua cidade
+
+4) Lista das 3 perguntas com mais votos
+5) Lista das 3 perguntas com menos votos
