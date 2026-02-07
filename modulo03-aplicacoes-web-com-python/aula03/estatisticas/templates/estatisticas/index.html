@@ -11,6 +11,25 @@
         <li>Quantidade de perguntas cadastradas: {{ qtd_perguntas_cadastradas }}</li>
         <li>Quantidade média de opções por pergunta: {{ qtd_media_de_opcoes_por_perguntas|floatformat }}</li>
     </ul>
+    <h2>Lista das 5 opções mais votadas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Opção</th>
+                <th>Qtd. Votos</th>
+                <th>Pergunta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for opcao in lista_opcoes_mais_votadas %}
+                <tr>
+                    <td>{{ opcao.texto_opcao }}</td>
+                    <td>{{ opcao.votos }}</td>
+                    <td>{{ opcao.pergunta }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     
     <hr>
     <a href="{% url "enquetes:index" %}">Ir para a página de enquetes</a>

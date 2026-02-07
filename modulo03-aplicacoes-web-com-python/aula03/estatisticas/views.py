@@ -15,17 +15,22 @@ def index(request):
 
     # Cálculo da média de opções por pergunta utilizando as chamadas do ORM do Django (annotate, aggregate)
 
-    # O annotate cria um campo em tempo de execução, que será adicionado
+    # O annotate cria um campo em tempo de execução, que será adicionado a cada item da lista
     contagem_opcoes = Pergunta.objects.annotate(
         numero_de_opcoes=Count("opcao")
     )
+
+    # O método aggregate chama uma função de agregação em cima do campo que foi criado com o annotate.
     qtd_media_de_opcoes_por_perguntas = contagem_opcoes.aggregate(
         media_opcoes=Avg("numero_de_opcoes")
     )['media_opcoes']
 
+    lista_opcoes_mais_votadas = Opcao.objects.order_by("-votos")[:5]
+
     contexto = {
         "qtd_perguntas_cadastradas": qtd_perguntas_cadastradas,
-        "qtd_media_de_opcoes_por_perguntas": qtd_media_de_opcoes_por_perguntas
+        "qtd_media_de_opcoes_por_perguntas": qtd_media_de_opcoes_por_perguntas,
+        "lista_opcoes_mais_votadas": lista_opcoes_mais_votadas
     }
 
     return render(
