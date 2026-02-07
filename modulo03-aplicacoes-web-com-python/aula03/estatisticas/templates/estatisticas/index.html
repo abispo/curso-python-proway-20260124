@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estatísticas</title>
-</head>
-<body>
-    <h1>Estatísticas das enquetes</h1>
+{% extends "base.html" %}
+
+{% block titulo %}Estatísticas do sistema de enquetes{% endblock titulo %}
+
+{% block conteudo %}
+<h1>Estatísticas das enquetes</h1>
     <ul>
         <li>Quantidade de perguntas cadastradas: {{ qtd_perguntas_cadastradas }}</li>
         <li>Quantidade média de opções por pergunta: {{ qtd_media_de_opcoes_por_perguntas|floatformat }}</li>
@@ -33,5 +30,4 @@
     
     <hr>
     <a href="{% url "enquetes:index" %}">Ir para a página de enquetes</a>
-</body>
-</html>
+{% endblock conteudo %}

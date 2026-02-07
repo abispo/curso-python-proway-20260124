@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block titulo %}Detalhes de "{{ pergunta.texto_pergunta }}{% endblock titulo %}
+
+{% block conteudo %}
 <form action="{% url "enquetes:votar" pergunta.id %}" method="POST">
     {% csrf_token %}
     <fieldset>
@@ -21,3 +26,5 @@
 {% comment %} <form action="{% url "enquetes:index" %}" method="get">
     <input type="submit" value="Voltar a página principal">
 </form> {% endcomment %}
+
+{% endblock conteudo %}
