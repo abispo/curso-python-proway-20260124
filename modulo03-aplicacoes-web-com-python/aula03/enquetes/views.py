@@ -38,7 +38,10 @@ def votar(request, pergunta_id):
         return render(
             request,
             "enquetes/detalhes.html",
-            {"mensagem_erro": "Você deve escolher uma opção"}
+            {
+                "pergunta": pergunta,
+                "mensagem_erro": "Você deve escolher uma opção"
+            }
         )
     else:
         opcao_escolhida.votos = opcao_escolhida.votos + 1
