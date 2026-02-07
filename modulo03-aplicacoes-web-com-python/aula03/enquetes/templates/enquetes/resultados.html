@@ -6,4 +6,5 @@
     {% endfor %}
 </ul>
 
-<a href="{% url "enquetes:detalhes" pergunta.id %}">Votar novamente?</a>
+<a href="{% url "enquetes:detalhes" pergunta.id %}">Votar novamente?</a><br>
+<a href="{% url "enquetes:index" %}">Voltar para a página principal</a>
