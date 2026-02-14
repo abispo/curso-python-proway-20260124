@@ -3,7 +3,7 @@
 {% block titulo %}Estatísticas do sistema de enquetes{% endblock titulo %}
 
 {% block conteudo %}
-<h1>Estatísticas das enquetes</h1>
+    <h1>Estatísticas das enquetes</h1>
     <ul>
         <li>Quantidade de perguntas cadastradas: {{ qtd_perguntas_cadastradas }}</li>
         <li>Quantidade média de opções por pergunta: {{ qtd_media_de_opcoes_por_perguntas|floatformat }}</li>
@@ -27,6 +27,21 @@
             {% endfor %}
         </tbody>
     </table>
+    <br>
+
+    <h2>Lista das 3 perguntas com mais votos</h2>
+    <ul>
+        {% for pergunta in perguntas_mais_votadas %}
+            <li>{{ pergunta.texto_pergunta }} -- {{ pergunta.num_votos }} voto{{ pergunta.num_votos|pluralize }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Lista das 3 perguntas com menos votos</h2>
+    <ul>
+        {% for pergunta in perguntas_menos_votadas %}
+            <li>{{ pergunta.texto_pergunta }} -- {{ pergunta.num_votos }} voto{{ pergunta.num_votos|pluralize }}</li>
+        {% endfor %}
+    </ul>
     
     <hr>
     <a href="{% url "enquetes:index" %}">Ir para a página de enquetes</a>

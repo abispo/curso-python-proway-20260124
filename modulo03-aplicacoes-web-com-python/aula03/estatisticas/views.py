@@ -1,4 +1,4 @@
-from django.db.models import Count, Avg
+from django.db.models import Count, Avg, Sum
 from django.shortcuts import render
 
 from enquetes.models import Opcao, Pergunta
@@ -27,10 +27,19 @@ def index(request):
 
     lista_opcoes_mais_votadas = Opcao.objects.order_by("-votos")[:5]
 
+    votos_perguntas = Pergunta.objects.annotate(
+        num_votos=Sum("opcao__votos")
+    )
+
+    perguntas_mais_votadas = votos_perguntas.order_by("-num_votos")[:3]
+    perguntas_menos_votadas = votos_perguntas.order_by("num_votos")[:3]
+
     contexto = {
         "qtd_perguntas_cadastradas": qtd_perguntas_cadastradas,
         "qtd_media_de_opcoes_por_perguntas": qtd_media_de_opcoes_por_perguntas,
-        "lista_opcoes_mais_votadas": lista_opcoes_mais_votadas
+        "lista_opcoes_mais_votadas": lista_opcoes_mais_votadas,
+        "perguntas_mais_votadas": perguntas_mais_votadas,
+        "perguntas_menos_votadas": perguntas_menos_votadas
     }
 
     return render(
