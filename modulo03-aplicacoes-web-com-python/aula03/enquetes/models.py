@@ -27,3 +27,14 @@ class Opcao(models.Model):
         db_table = "opcoes"
         verbose_name_plural = "Opções"
     
+class Comentario(models.Model):
+    pergunta = models.ForeignKey(Pergunta, on_delete=models.CASCADE)
+    texto_comentario = models.TextField()
+    data_hora = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.texto_comentario
+    
+    class Meta:
+        db_table = "comentarios"
+        verbose_name_plural = "Comentários"

@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Opcao, Pergunta
+from .models import Opcao, Pergunta, Comentario
 
 def index(request):
     ultimas_cinco_perguntas = Pergunta.objects.order_by(
@@ -50,3 +50,30 @@ def votar(request, pergunta_id):
         return HttpResponseRedirect(
             reverse("enquetes:resultados", args=(pergunta.id,))
         )
+    
+def recebe_comentario_pergunta(request, pergunta_id):
+
+    pergunta = get_object_or_404(Pergunta, pk=pergunta_id)
+
+    texto_comentario: str = request.POST.get('texto_comentario')
+
+    if len(texto_comentario.strip()) == 0:
+        return render(
+        request,
+        "enquetes/resultados.html",
+        {
+            "pergunta": pergunta,
+            "mensagem_erro": "Você deve informar o comentário antes de tentar enviar."
+        }
+    )
+
+    comentario = Comentario(
+        pergunta=pergunta,
+        texto_comentario=request.POST['texto_comentario']
+    )
+    
+    comentario.save()
+
+    return HttpResponseRedirect(
+        reverse("enquetes:index")
+    )

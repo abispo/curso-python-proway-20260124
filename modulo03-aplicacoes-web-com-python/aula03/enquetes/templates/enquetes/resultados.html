@@ -15,4 +15,34 @@
 <a href="{% url "enquetes:detalhes" pergunta.id %}">Votar novamente?</a><br>
 <a href="{% url "enquetes:index" %}">Voltar para a página principal</a>
 
+<hr>
+
+<form action="{% url "enquetes:comentar" pergunta.id %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend><h3>Insira um comentário sobre a pergunta</h3></legend>
+        {% if mensagem_erro %}
+            <p><strong>{{ mensagem_erro }}</strong></p>
+        {% endif %}
+
+        <textarea name="texto_comentario" id="" cols="80" rows="10"></textarea>
+    </fieldset>
+    <br>
+    <input type="submit" value="Enviar">
+    <br>
+</form>
+<hr><br>
+<h3>Lista de comentários</h3>
+
+<ul>
+    {% for comentario in pergunta.comentario_set.all %}
+    <li>
+        <i>{{ comentario.data_hora|date:"d/m/Y H:i:s" }} -- {{ comentario.texto_comentario }}</i>
+    </li>
+    {% empty %}
+        <i>Não existem comentários cadastrados para essa pergunta.</i>
+    {% endfor %}
+</ul>
+    
 {% endblock conteudo %}
