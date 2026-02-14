@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'registro.apps.RegistroConfig',
+
     'debug_toolbar',
 ]
 
