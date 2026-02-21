@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from . import forms
 from .models import PreRegistro
+from .utils import enviar_email
 
 # Apesar de não ser obrigatório, podemos indicar o tipo dos parâmetros de funções e também o tipo de retorno. Muitos consideram uma boa prática, e é muito útil também no uso de IDEs que não conseguem automaticamente inferir o tipo de dado que está sendo tratado.
 def pre_registro(request: HttpRequest) -> HttpResponse:
@@ -40,7 +41,7 @@ def pre_registro(request: HttpRequest) -> HttpResponse:
             pre_registro = PreRegistro(email=email)
             pre_registro.save()
 
-            # Aqui vamos enviar um e-mail para o usuário
+            enviar_email(request, pre_registro)
 
             return redirect(reverse(
                 "registro:envio_email_pre_registro"
@@ -50,4 +51,10 @@ def envio_email_pre_registro(request):
     return render(
         request,
         "registro/envio_email_pre_registro.html"
+    )
+
+def confirmar_registro(request):
+    return render(
+        request,
+        "registro/confirmar_registro.html"
     )
