@@ -23,13 +23,14 @@ def pre_registro(request: HttpRequest) -> HttpResponse:
 
             pre_registro_valido_ja_existe = PreRegistro.objects.filter(
                 email=email, valido=True
-            )
+            ).exists()
 
             if pre_registro_valido_ja_existe:
                 return render(
                     request,
                     "registro/pre_registro.html",
                     {
+                        "form": forms.PreRegistroForm,
                         "erros": [
                             "Já existe um pré-registro com esse e-mail, finalize ou aguarde o link expirar."
                         ]
@@ -48,5 +49,5 @@ def pre_registro(request: HttpRequest) -> HttpResponse:
 def envio_email_pre_registro(request):
     return render(
         request,
-        "pre_registro/envio_email_pre_registro.html"
+        "registro/envio_email_pre_registro.html"
     )
