@@ -53,8 +53,18 @@ def envio_email_pre_registro(request):
         "registro/envio_email_pre_registro.html"
     )
 
-def confirmar_registro(request):
-    return render(
-        request,
-        "registro/confirmar_registro.html"
-    )
+def confirmar_registro(request: HttpRequest, token: str):
+
+    if request.method == "GET":
+
+        pre_registro = PreRegistro.objects.filter(
+            token=token, valido=True
+        ).first()
+
+        return render(
+            request,
+            "registro/confirmar_registro.html",
+            {
+                "pre_registro": pre_registro
+            }
+        )

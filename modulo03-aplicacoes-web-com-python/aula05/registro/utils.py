@@ -10,12 +10,10 @@ Você recebeu esse e-mail pois você ou alguém fez um pré-registro no sistema 
 Caso queira confirmar o registro, clique no link a seguir.
 Caso não tenha sido você que fez o pré-registro, apenas ignore esse e-mail.
 
-{}{}{}?id={}
-""".format(
+{}{}{}""".format(
     'https://' if request.is_secure() else 'http://',
     request.get_host(),
-    reverse('registro:registro'),
-    pre_registro.token
+    reverse('registro:confirmar_registro', args=(pre_registro.token,))
 )
 
     send_mail(
