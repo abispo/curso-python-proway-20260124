@@ -10,6 +10,7 @@ from django.conf import settings
 from . import forms
 from .models import PreRegistro
 from .utils import enviar_email
+from .validators import todos_dados_foram_preenchidos
 
 # Apesar de não ser obrigatório, podemos indicar o tipo dos parâmetros de funções e também o tipo de retorno. Muitos consideram uma boa prática, e é muito útil também no uso de IDEs que não conseguem automaticamente inferir o tipo de dado que está sendo tratado.
 def pre_registro(request: HttpRequest) -> HttpResponse:
@@ -108,6 +109,38 @@ def confirmar_registro(request: HttpRequest, token: str):
                 "pre_registro": pre_registro
             }
         )
+    
+    elif request.method == "POST":
+        nome = request.POST.get("nome")
+        sobrenome = request.POST.get("sobrenome")
+        nome_de_usuario = request.POST.get("nome_de_usuario")
+        email = request.POST.get("email")
+        senha = request.POST.get("senha")
+        confirmar_senha = request.POST.get("confirmar_senha")
+
+        pre_registro = PreRegistro.objects.filter(
+            token=token, valido=True
+        ).first()
+
+        dados_preenchidos = todos_dados_foram_preenchidos(
+            nome, sobrenome, nome_de_usuario, email, senha, confirmar_senha
+        )
+
+        if not dados_preenchidos:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "Você deve preencher todos os dados do formulário."
+            )
+
+        if messages.get_messages(request):
+            return render(
+                request,
+                "registro/confirmar_registro.html",
+                {
+                    "pre_registro": pre_registro
+                }
+            )
     
 def pre_registro_invalido(request):
     return render(
