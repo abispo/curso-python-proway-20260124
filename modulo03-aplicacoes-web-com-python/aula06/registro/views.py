@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -29,22 +30,29 @@ def pre_registro(request: HttpRequest) -> HttpResponse:
             ).exists()
 
             if pre_registro_valido_ja_existe:
-                erros.append("Já existe um pré-registro com esse e-mail, finalize ou aguarde o link expirar.")
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    "Já existe um pré-registro com esse e-mail, finalize ou aguarde o link expirar."
+                )
 
             usuario_ja_registrado = User.objects.filter(
                 email=email
             ).exists()
 
             if usuario_ja_registrado:
-                erros.append("Já existe um registro com esse e-mail. Escolha outro.")
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    "Já existe um registro com esse e-mail. Escolha outro."
+                )
 
-            if erros:
+            if messages.get_messages(request):
                 return render(
                     request,
                     "registro/pre_registro.html",
                     {
                         "form": forms.PreRegistroForm,
-                        "erros": erros
                     }
                 )
             
