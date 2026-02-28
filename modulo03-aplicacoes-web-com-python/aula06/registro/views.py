@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.urls import reverse
+from django.utils import timezone
+from django.conf import settings
 
 from . import forms
 from .models import PreRegistro
@@ -85,6 +87,19 @@ def confirmar_registro(request: HttpRequest, token: str):
                 request,
                 "registro/pre_registro_invalido.html"
             )
+        
+        pre_registro_expirado = (
+            timezone.now() - pre_registro.criado_em
+        ).total_seconds() > settings.LIMITE_CONFIRMACAO_PRE_REGISTRO
+
+        if pre_registro_expirado:
+            pre_registro.valido = False
+            pre_registro.save()
+
+            return render(
+                request,
+                "registro/pre_registro_expirado.html"
+            )
 
         return render(
             request,
@@ -98,4 +113,10 @@ def pre_registro_invalido(request):
     return render(
         request,
         "registro/pre_registro_invalido.html"
+    )
+
+def pre_registro_expirado(request):
+    return render(
+        request,
+        "registro/pre_registro_expirado.html"
     )

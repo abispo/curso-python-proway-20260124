@@ -135,3 +135,5 @@ INTERNAL_IPS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+LIMITE_CONFIRMACAO_PRE_REGISTRO = 86400     # 24h
