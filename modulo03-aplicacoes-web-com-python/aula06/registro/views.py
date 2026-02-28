@@ -10,7 +10,11 @@ from django.conf import settings
 from . import forms
 from .models import PreRegistro
 from .utils import enviar_email
-from .validators import todos_dados_foram_preenchidos, nome_de_usuario_ja_existe
+from .validators import (
+    todos_dados_foram_preenchidos,
+    nome_de_usuario_ja_existe,
+    senhas_nao_sao_iguais
+)
 
 # Apesar de não ser obrigatório, podemos indicar o tipo dos parâmetros de funções e também o tipo de retorno. Muitos consideram uma boa prática, e é muito útil também no uso de IDEs que não conseguem automaticamente inferir o tipo de dado que está sendo tratado.
 def pre_registro(request: HttpRequest) -> HttpResponse:
@@ -139,6 +143,13 @@ def confirmar_registro(request: HttpRequest, token: str):
                 request,
                 messages.ERROR,
                 "O nome de usuário informado já existe. Escolha outro."
+            )
+
+        if senhas_nao_sao_iguais(senha, confirmar_senha):
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "A senha e a confirmação da senha não conferem."
             )
 
         if messages.get_messages(request):

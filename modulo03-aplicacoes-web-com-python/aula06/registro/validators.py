@@ -8,3 +8,6 @@ def todos_dados_foram_preenchidos(*args: tuple) -> bool:
 
 def nome_de_usuario_ja_existe(nome_de_usuario: str) -> User | None:
     return User.objects.filter(username=nome_de_usuario).first()
+
+def senhas_nao_sao_iguais(senha: str, confirmar_senha: str) -> bool:
+    return senha.strip() != confirmar_senha.strip()
