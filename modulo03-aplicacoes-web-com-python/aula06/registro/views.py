@@ -80,6 +80,12 @@ def confirmar_registro(request: HttpRequest, token: str):
             token=token, valido=True
         ).first()
 
+        if not pre_registro:
+            return render(
+                request,
+                "registro/pre_registro_invalido.html"
+            )
+
         return render(
             request,
             "registro/confirmar_registro.html",
@@ -87,3 +93,9 @@ def confirmar_registro(request: HttpRequest, token: str):
                 "pre_registro": pre_registro
             }
         )
+    
+def pre_registro_invalido(request):
+    return render(
+        request,
+        "registro/pre_registro_invalido.html"
+    )
