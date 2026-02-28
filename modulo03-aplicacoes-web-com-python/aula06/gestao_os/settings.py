@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'registro.apps.RegistroConfig',
+    'gestao.apps.GestaoConfig',
 
     'debug_toolbar',
 ]
@@ -137,3 +138,5 @@ INTERNAL_IPS = [
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LIMITE_CONFIRMACAO_PRE_REGISTRO = 86400     # 24h
+
+LOGIN_REDIRECT_URL = "gestao:index"
