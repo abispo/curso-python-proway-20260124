@@ -72,6 +72,8 @@ def pre_registro(request: HttpRequest) -> HttpResponse:
                 return redirect(reverse(
                     "registro:envio_email_pre_registro"
                 ))
+            
+            User.objects.create_user()
 
 def envio_email_pre_registro(request):
     return render(
@@ -160,6 +162,16 @@ def confirmar_registro(request: HttpRequest, token: str):
                     "pre_registro": pre_registro
                 }
             )
+        
+        User.objects.create_user(
+            username=nome_de_usuario,
+            first_name=nome,
+            last_name=sobrenome,
+            email=email,
+            password=senha
+        )
+
+        return redirect(reverse('registro:registro_confirmado'))
     
 def pre_registro_invalido(request):
     return render(
@@ -171,4 +183,10 @@ def pre_registro_expirado(request):
     return render(
         request,
         "registro/pre_registro_expirado.html"
+    )
+
+def registro_confirmado(request):
+    return render(
+        request,
+        "registro/registro_confirmado.html"
     )
