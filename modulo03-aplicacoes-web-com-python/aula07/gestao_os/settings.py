@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'registro.apps.RegistroConfig',
     'gestao.apps.GestaoConfig',
+    'usuarios.apps.UsuariosConfig',
 
     'debug_toolbar',
 ]
