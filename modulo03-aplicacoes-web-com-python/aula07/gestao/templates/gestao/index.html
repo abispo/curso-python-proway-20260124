@@ -4,14 +4,26 @@
 
 {% block conteudo %}
 
-    <div class="row">
-        <div class="col">
-            {% if user.is_authenticated %}
-                <p>Olá! Você está logado e seu e-mail é '{{ user.email }}.'</p>
-            {% else %}
-                <p>Você não está logado. <a href="{% url "login" %}">Clique aqui</a> para ir à página de Login.</p>
-            {% endif %}
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col">
+                <p>Olá! Você está logado e seu e-mail é <strong>{{ user.email }}</strong>. Clique no botão abaixo para fazer o logout.</p>
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col">
+                <form action="{% url "logout" %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col">
+                <p>Você não está logado. <a href="{% url "login" %}">Clique aqui</a> para ir à página de Login.</p>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock conteudo %}
