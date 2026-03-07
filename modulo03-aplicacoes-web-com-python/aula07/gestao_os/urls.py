@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('registro/', include('registro.urls')),
     path('gestao/', include('gestao.urls')),
+    path('usuarios/', include('usuarios.urls')),
     path('acesso/', include('django.contrib.auth.urls'))
 ] + debug_toolbar_urls()
