@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}Gestão de OS - Home{% endblock titulo %}
+
+{% block conteudo %}
+
+    <div class="row">
+        <div class="col">
+            {% if user.is_authenticated %}
+                <p>Olá! Você está logado e seu e-mail é '{{ user.email }}.'</p>
+            {% else %}
+                <p>Você não está logado. <a href="{% url "login" %}">Clique aqui</a> para ir à página de Login.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock conteudo %}
