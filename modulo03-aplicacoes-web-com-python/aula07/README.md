@@ -9,9 +9,10 @@ Você irá criar e registrar no projeto o pacote `usuarios`. A url raiz será `u
 ## Criação da model `Perfil`
 
 Dentro do pacote `usuarios`, você irá criar a model `Perfil`. Essa model irá armazenar as seguintes informações de perfil do usuário:
-    * Data de nascimento (tipo `DateField`)
-    * Gênero (tipo `CharField`)
-    * Endereço (tipo `CharField`)
+
+* Data de nascimento (tipo `DateField`)
+* Gênero (tipo `CharField`)
+* Endereço (tipo `CharField`)
 
 Essa model terá uma relação de `1:1` (Um-Para-Um) com a model `django.contrib.auth.models.User`. Ao invés de usar a classe `ForeignKey`, você usará a classe `OneToOneField`. Você pode consultar a documentação dessa classe [aqui](https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.OneToOneField).
 
