@@ -22,7 +22,7 @@ Essa rota servirá para o usuário visualizar e editar as suas informações pes
 
 ## Criar a página de perfil do usuário
 
-Quando o usuário acessar a rota `usuarios/eu/`, a página de perfil será carregada. Essa página consistirá de um formulário com os dados preenchidos nos campos correspondentes. Ou seja, esse formulário terá os seguintes campos:
+Quando o usuário acessar a rota `usuarios/eu/`, a página de perfil será carregada. Essa página consistirá de um formulário com os dados preenchidos nos campos correspondentes. Ou seja, esse formulário terá os seguintes elementos:
 
 * Nome de usuário (esse campo não será editável)
 * E-mail (esse campo não será editável)
