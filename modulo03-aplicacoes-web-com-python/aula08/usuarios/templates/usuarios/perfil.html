@@ -7,8 +7,6 @@
     <form action="" method="post">
         {% csrf_token %}
 
-        <div class="row"><div class="col">{{ user.perfil.data_nascimento }}</div></div>
-
         {% if erros %}
             {% for erro in erros %}
                 <div class="row my-1 justify-content-center">
@@ -94,9 +92,10 @@
             </div>
             <div class="col-3">
                 <select name="genero" class="form-select" aria-label="Gênero do usuário">
-                    <option selected>Escolha um gênero</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
+                    {% for chave, genero in generos %}
+                        <option
+                            value="{{ chave }}" {% if chave == user.perfil.genero %}selected{% endif %}>{{ genero }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>

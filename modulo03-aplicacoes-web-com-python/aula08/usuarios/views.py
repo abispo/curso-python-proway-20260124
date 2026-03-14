@@ -5,7 +5,7 @@ from django.http.request import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .models import Perfil
+from .models import Perfil, Genero
 from .validators import campos_nao_preenchidos
 
 def perfil(request: HttpRequest):
@@ -13,7 +13,8 @@ def perfil(request: HttpRequest):
     if request.method == "GET":
         return render(
             request,
-            "usuarios/perfil.html"
+            "usuarios/perfil.html",
+            {"generos": Genero.choices}
         )
 
     if request.method == "POST":
@@ -30,7 +31,10 @@ def perfil(request: HttpRequest):
             return render(
                 request,
                 "usuarios/perfil.html",
-                {"erros": ha_campos_nao_preenchidos}
+                {
+                    "erros": ha_campos_nao_preenchidos,
+                    "generos": Genero.choices
+                }
             )
         
         user: User = request.user
@@ -49,9 +53,13 @@ def perfil(request: HttpRequest):
             user.perfil = perfil_obj
 
         else:
-            user.perfil.data_nascimento = data_de_nascimento
+            user.perfil.data_nascimento = datetime.strptime(
+                data_de_nascimento,
+                "%Y-%m-%d"
+            ).date()
             user.perfil.genero = genero
             user.perfil.endereco = endereco
+            user.perfil.save()
 
         user.save()
 

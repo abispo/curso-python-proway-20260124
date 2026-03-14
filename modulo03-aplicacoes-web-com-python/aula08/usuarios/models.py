@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+class Genero(models.TextChoices):
+    NAO_INFORMADO = "NI", "Prefiro não informar"
+    MASCULINO = "M", "Masculino"
+    FEMININO = "F", "Feminino"
+
 class Perfil(models.Model):
     usuario = models.OneToOneField(
         User,
@@ -10,7 +15,7 @@ class Perfil(models.Model):
         verbose_name="Data de Nascimento",
         null=True
     )
-    genero = models.CharField(max_length=20, null=True)
+    genero = models.CharField(max_length=20, choices=Genero, null=True)
     endereco = models.CharField(max_length=200, null=False)
 
     class Meta:
