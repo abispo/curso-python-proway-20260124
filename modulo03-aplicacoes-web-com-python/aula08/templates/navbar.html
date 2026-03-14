@@ -17,6 +17,10 @@
             Ordens de Serviço
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if perms.gestao.pode_visualizar_todas_os %}
+              <li><a class="dropdown-item" href="#">Ver Ordens de Serviço</a></li>
+              <li><a class="dropdown-item" href="#">Ordens de Serviço atribuídas a mim</a></li>
+            {% endif %}
             <li><a class="dropdown-item" href="#">Nova Ordem de Serviço</a></li>
             <li><a class="dropdown-item" href="#">Minhas Ordens de Serviço</a></li>
           </ul>

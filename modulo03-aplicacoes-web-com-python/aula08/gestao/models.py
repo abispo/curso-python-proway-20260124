@@ -40,3 +40,8 @@ class OrdemDeServico(models.Model):
         verbose_name_plural = "Ordens de Serviço"
         ordering = ['-data_de_criacao']
         db_table = "ordens_de_servico"
+        permissions = [
+            ('pode_visualizar_todas_os', 'Pode visualizar todas as ordens de serviço'),
+            ('pode_atribuir_tecnico', 'Pode atribuir uma Ordem de Serviço a um técnico'),
+            ('pode_fechar_os', 'Pode fechar uma ordem de serviçox')
+        ]
