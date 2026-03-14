@@ -7,15 +7,7 @@
     {% if user.is_authenticated %}
         <div class="row">
             <div class="col">
-                <p>Olá! Você está logado e seu e-mail é <strong>{{ user.email }}</strong>. Clique no botão abaixo para fazer o logout.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <form action="{% url "logout" %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Logout</button>
-                </form>
+                <p>Olá! Você está logado e seu e-mail é <strong>{{ user.email }}</strong>.</p>
             </div>
         </div>
     {% else %}
