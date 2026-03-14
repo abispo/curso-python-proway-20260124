@@ -1,41 +1,17 @@
 # Desafio
 
-Criar uma estrutura para que o usuário consiga alterar os seus dados de Perfil(nome, data de nascimento, etc). Você terá que fazer o seguinte:
+Criar a estrutura de abertura e gestão de ordem de serviço. Existem 2 tipos de usuários no sistema: Cliente e Técnico. O Cliente deve ter as seguintes permissões:
 
-## Criação do pacote `usuarios`
+* Abrir uma ordem de serviço
+* Visualizar as próprias ordens de serviço abertas
 
-Você irá criar e registrar no projeto o pacote `usuarios`. A url raiz será `usuarios/`.
+Nesse caso, a partir do menu **Nova Ordem de Serviço**, o cliente será direcionado para um formulário de criação de OS, onde ele colocará o titulo, assunto e demais campos. Ele também terá acesso a uma página onde poderá visualizar todas as ordens de serviço que ele abriu.
 
-## Criação da model `Perfil`
+O Técnico terá as seguintes permissões:
 
-Dentro do pacote `usuarios`, você irá criar a model `Perfil`. Essa model irá armazenar as seguintes informações de perfil do usuário:
+* Atribuir uma ordem de serviço a si mesmo
+* Alterar o status dessa ordem de serviço.
 
-* Data de nascimento (tipo `DateField`)
-* Gênero (tipo `CharField`)
-* Endereço (tipo `CharField`)
+A partir do menu **Ver Ordens de Serviço**, o técnico poderá visualizar todas as ordens de serviço que ainda não foram atribuídas e atribuir a si mesmo. Assim como alterar o status e comentar as ordens de serviço atribuídas a ele.
 
-Essa model terá uma relação de `1:1` (Um-Para-Um) com a model `django.contrib.auth.models.User`. Ao invés de usar a classe `ForeignKey`, você usará a classe `OneToOneField`. Você pode consultar a documentação dessa classe [aqui](https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.OneToOneField).
-
-**ATENÇÃO!** Quando criamos/alteramos qualquer model, precisamos gerar as migrations (`python manage.py makemigrations`) e logo em seguida aplicá-las (`python manage.py migrate`).
-
-## Criar a rota de perfil do usuário.
-Essa rota servirá para o usuário visualizar e editar as suas informações pessoais. O caminho dessa rota será `eu/`. Ou seja, o caminho completo onde o usuário conseguirá acessar seus dados pessoais será `usuarios/eu/`
-
-## Criar a página de perfil do usuário
-
-Quando o usuário acessar a rota `usuarios/eu/`, a página de perfil será carregada. Essa página consistirá de um formulário com os dados preenchidos nos campos correspondentes. Ou seja, esse formulário terá os seguintes elementos:
-
-* Nome de usuário (esse campo não será editável)
-* E-mail (esse campo não será editável)
-* Nome
-* Sobrenome
-* Data de Nascimento
-* Gênero
-* Endereço
-* Botão "Enviar"
-
-Como dito anteriormente, caso esses dados estejam preenchidos nas tabelas, eles devem ser carregados nos elementos.
-
-## Criação da lógica de edição das informações
-
-Após o usuário preencher os dados e clicar no botão enviar, você deverá capturar esses dados e salvar nas tabelas correspondentes (`Nome` e `E-mail` na tabela `User` e os demais dados na tabela `Perfil`). Implemente as validações que você achar necessárias.
+Para isso devemos trabalhar com a parte de autorização do Django, trabalhando tanto no backend como no frontend.
