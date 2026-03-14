@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <h1>Perfil de {{ user.username }}</h1>
+    <hr>
+
+    <form action="" method="post">
+        <!-- Nome de usuário e e-mail -->
+        <div class="row justify-content-center mt-1">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="nome_de_usuario"
+                        id="nome_de_usuario"
+                        class="form-control"
+                        value="{{ user.username }}"
+                        placeholder="Nome de Usuário"
+                        disabled>
+                        <label for="nome_de_usuario" class="form-label">Nome de Usuário</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        value="{{ user.email }}"
+                        placeholder="E-mail"
+                        disabled>
+                        <label for="nome_de_usuario" class="form-label">E-mail</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nome e Sobrenome -->
+        <div class="row justify-content-center mt-1">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="nome"
+                        id="nome"
+                        class="form-control"
+                        value="{{ user.first_name }}"
+                        placeholder="Nome"
+                        required>
+                        <label for="nome" class="form-label">Nome</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="sobrenome"
+                        id="sobrenome"
+                        class="form-control"
+                        value="{{ user.last_name }}"
+                        placeholder="Sobrenome"
+                        required>
+                        <label for="sobrenome" class="form-label">Sobrenome</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data de Nascimento e Gênero -->
+        <div class="row justify-content-center mt-1">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="date"
+                        name="data_de_nascimento"
+                        id="data_de_nascimento"
+                        class="form-control"
+                        value="{{ user.perfil.data_de_nascimento }}"
+                        placeholder="Data de Nascimento">
+                        <label for="data_de_nascimento" class="form-label">Data de Nascimento</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <select class="form-select" aria-label="Gênero do usuário">
+                    <option selected>Escolha um gênero</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Feminino</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Data de Nascimento e Gênero -->
+        <div class="row justify-content-center mt-1">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="endereco"
+                        id="endereco"
+                        class="form-control"
+                        value="{{ user.perfil.endereco }}"
+                        placeholder="Endereço"
+                        required>
+                        <label for="endereco" class="form-label">Endereço</label>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock conteudo %}
