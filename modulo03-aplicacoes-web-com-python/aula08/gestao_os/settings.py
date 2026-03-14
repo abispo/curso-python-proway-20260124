@@ -140,5 +140,6 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LIMITE_CONFIRMACAO_PRE_REGISTRO = 86400     # 24h
 
+LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "usuarios:perfil"
 LOGOUT_REDIRECT_URL = "gestao:index"

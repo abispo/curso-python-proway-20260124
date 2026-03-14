@@ -18,5 +18,8 @@ class Perfil(models.Model):
     genero = models.CharField(max_length=20, choices=Genero, null=True)
     endereco = models.CharField(max_length=200, null=False)
 
+    def __str__(self):
+        return f"{self.usuario.first_name} {self.usuario.last_name} ({self.usuario.username})"
+
     class Meta:
         db_table = "perfis_usuarios"

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http.request import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -8,6 +9,7 @@ from django.urls import reverse
 from .models import Perfil, Genero
 from .validators import campos_nao_preenchidos
 
+@login_required
 def perfil(request: HttpRequest):
 
     if request.method == "GET":
