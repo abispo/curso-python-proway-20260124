@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
@@ -33,10 +34,29 @@ def nova_ordem_de_servico(request: HttpRequest):
 
         os.save()
 
-        return redirect(reverse("gestao:nova_ordem_de_servico"))
+        messages.success(
+            request=request,
+            message=f"Ordem de serviço #{os.pk} criada com sucesso."
+        )
+
+        return redirect(reverse("gestao:ordens_de_servico"))
     
 
 class OrdemDeServicoListView(LoginRequiredMixin, ListView):
     model = OrdemDeServico
     template_name = 'gestao/lista_ordens.html'
-    context_object_name = 'ordens'
+    context_object_name = 'ordens_de_servico'
+
+    def get_queryset(self):
+        """
+        Docstring for get_queryset
+        
+        Estamos modificando o método herdado get_queryset. Abaixo é verificado se o usuário tem a permissão 'gestao.pode_visualizar_todas_os'. Se ele tiver, todos os dados da model serão mostrados. Se não, vamos filtrar apenas as ordens de serviço criadas pelo próprio usuário.
+        """
+        user = self.request.user
+
+        if user.has_perm("gestao.pode_visualizar_todas_os"):
+            return OrdemDeServico.objects.all()
+        
+        return OrdemDeServico.objects.filter(cliente=user)
+    
