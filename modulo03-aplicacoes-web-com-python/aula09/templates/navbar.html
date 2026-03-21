@@ -22,7 +22,7 @@
               <li><a class="dropdown-item" href="#">Ordens de Serviço atribuídas a mim</a></li>
             {% endif %}
             <li><a class="dropdown-item" href="{% url "gestao:nova_ordem_de_servico" %}">Nova Ordem de Serviço</a></li>
-            <li><a class="dropdown-item" href="#">Minhas Ordens de Serviço</a></li>
+            <li><a class="dropdown-item" href="{% url "gestao:ordens_de_servico" %}">Minhas Ordens de Serviço</a></li>
           </ul>
         </li>
       </ul>

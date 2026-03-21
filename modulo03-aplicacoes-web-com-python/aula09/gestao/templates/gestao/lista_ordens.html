@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<ul>
+    {% for os in ordens %}
+        <li>{{ os }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock conteudo %}

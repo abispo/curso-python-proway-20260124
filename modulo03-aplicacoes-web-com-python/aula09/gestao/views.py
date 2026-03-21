@@ -1,6 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.generic import ListView
 
 from .models import OrdemDeServico
 
@@ -32,3 +34,9 @@ def nova_ordem_de_servico(request: HttpRequest):
         os.save()
 
         return redirect(reverse("gestao:nova_ordem_de_servico"))
+    
+
+class OrdemDeServicoListView(LoginRequiredMixin, ListView):
+    model = OrdemDeServico
+    template_name = 'gestao/lista_ordens.html'
+    context_object_name = 'ordens'
