@@ -1,11 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, UpdateView
 
-from .models import OrdemDeServico
+from .models import OrdemDeServico, StatusOrdemDeServico
 
 def index(request: HttpRequest):
     return render(
@@ -59,4 +59,28 @@ class OrdemDeServicoListView(LoginRequiredMixin, ListView):
             return OrdemDeServico.objects.all()
         
         return OrdemDeServico.objects.filter(cliente=user)
+
+
+class OrdemDeServicoDetailView(LoginRequiredMixin, DetailView):
+    model = OrdemDeServico
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_list'] = StatusOrdemDeServico.choices
+
+        return context
+    
+
+class OrdemDeServicoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = OrdemDeServico
+
+    permission_required = 'gestao.change_ordemdeservico'
+    fields = ['titulo', 'descricao']
+
+    def post(self, request, *args, **kwargs):
+        print("ok")
+        return redirect(reverse('gestao:ordens_de_servico'))
+    
+    def form_valid(self, form):
+        return super().form_valid(form)
     
