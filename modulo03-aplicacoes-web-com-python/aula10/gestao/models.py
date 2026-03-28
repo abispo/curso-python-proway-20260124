@@ -35,6 +35,10 @@ class OrdemDeServico(models.Model):
     def __str__(self):
         return f"{self.titulo} ({self.status})"
     
+    def esta_finalizada(self):
+        return self.status == StatusOrdemDeServico.CANCELADA.value or \
+            self.status == StatusOrdemDeServico.CONCLUIDA.value
+    
     class Meta:
         verbose_name = "Ordem de Serviço"
         verbose_name_plural = "Ordens de Serviço"

@@ -1,7 +1,9 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http.request import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, UpdateView
 
@@ -41,6 +43,16 @@ def nova_ordem_de_servico(request: HttpRequest):
 
         return redirect(reverse("gestao:ordens_de_servico"))
     
+def ordens_de_servico_atribuidas(request: HttpRequest):
+    
+    ordens_de_servico = OrdemDeServico.objects.filter(tecnico=request.user)
+
+    return render(
+        request,
+        "gestao/lista_ordens.html",
+        {"ordens_de_servico": ordens_de_servico}
+    )
+
 
 class OrdemDeServicoListView(LoginRequiredMixin, ListView):
     model = OrdemDeServico
@@ -78,7 +90,31 @@ class OrdemDeServicoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Upda
     fields = ['titulo', 'descricao']
 
     def post(self, request, *args, **kwargs):
-        print("ok")
+
+        os_sendo_atribuida = request.POST.get("atribuir")
+        os = get_object_or_404(OrdemDeServico, pk=kwargs.get("pk"))
+        timestamp = datetime.datetime.now(datetime.timezone.utc)
+
+        if os_sendo_atribuida:
+
+            os.tecnico = request.user
+            os.status = StatusOrdemDeServico.EM_ANDAMENTO.value
+
+            descricao = f"""
+    {os.descricao}
+--- OS atribuída a {request.user} em {timestamp.strftime('%H:%M:%S %d/%m/%Y')} ----------------
+"""
+            os.descricao = descricao
+            os.save()
+
+        else:
+            descricao = request.POST.get("descricao")
+            status = request.POST.get("status")
+
+            os.descricao = f"{descricao}\n\n---\nTicket fechado em {timestamp.strftime('%H:%M:%S %d/%m/%Y')} por {request.user}"
+            os.status = status
+            os.save()
+
         return redirect(reverse('gestao:ordens_de_servico'))
     
     def form_valid(self, form):
